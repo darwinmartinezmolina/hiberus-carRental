@@ -1,0 +1,66 @@
+<h1>Drivers list</h1>
+<hr>
+
+<div class="row">
+    <div class="col text-right">
+        <button class="btn btn-primary" routerLink="/driver-detail/new">
+            <i class="fa fa-plus"></i>
+            Add
+        </button>
+    </div>
+</div>
+
+<table *ngIf="!loading && drivers.length > 0" class="table mt-3 animated fadeIn faster">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">License</th>
+            <th scope="col">Tools</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let driver of pageOfItems; let i = index">
+            <th scope="row">{{driver.iddrivers}}</th>
+            <td>{{driver.name}}</td>
+            <td>{{driver.surname}}</td>
+            <td>{{driver.license}}</td>
+            <td>
+                <button class="btn btn-info mr-1" [routerLink]="['/driver-detail',driver.iddrivers]">
+                    <i class="fa fa-pen"></i>
+                </button>
+                <button class="btn btn-danger" (click)="deleteDriver(driver, i)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+
+    </tbody>
+
+
+</table>
+
+<div class="card-footer pb-0 pt-3">
+    <div class="d-flex justify-content-center">
+        <jw-pagination [items]="drivers" [pageSize]=5 (changePage)="onChangePage($event)"></jw-pagination>
+    </div>
+</div>
+
+<div *ngIf="!loading && drivers.length===0" class="alert alert-warning text-center mt-3 animated fadeIn faster">
+    <h4 class="alert-heading">No records</h4>
+    <p>
+        <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+
+</div>
+
+<div *ngIf="loading" class="alert alert-info text-center mt-3 animated fadeIn faster">
+    <h4 class="alert-heading">Loading</h4>
+    <p>
+        <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">
+        Please wait
+    </p>
+</div>
